@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
 
 namespace Generics;
-public class Store<T>
+public class Store<T> where T : IHasId
 {
     private readonly List<T> _items;
 
@@ -37,6 +34,9 @@ public class Store<T>
 
     public void Remove(int id)
     {
+        var item = GetById(id);
 
+        if (item != null)
+            _items.Remove(item);
     }
 }

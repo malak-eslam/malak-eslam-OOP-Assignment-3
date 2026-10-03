@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Generics;
-public class Student: IHasId
+public interface IHasId
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+     int Id { get; }
 }
