@@ -4,39 +4,37 @@
 namespace Generics;
 public class Store<T> where T : IHasId
 {
-    private readonly List<T> _items;
+    private readonly Dictionary<int, T> _items;
 
     public Store()
     {
-        _items = new List<T>();
+        _items = new Dictionary<int, T>();
     }
 
     public void Add(T item)
     {
-        _items.Add(item);
+        if(_items.ContainsKey(item.Id))
+            throw new ArgumentException($"An item with Id {item.Id} already exists.");
+
+        _items.Add(item.Id, item);
     }
 
     public T? GetById(int id)
     {
-        foreach (var item in _items)
-        {
-            if (item.Id == id)
+       
+        if (_items.TryGetValue(id, out var item))
                 return item;
-        }
-
+        
         return default;
     }
 
-    public List<T> GetAll()
+    public IReadOnlyCollection<T> GetAll()
     {
-        return _items;
+        return _items.Values;
     }
 
     public void Remove(int id)
     {
-        var item = GetById(id);
-
-        if (item != null)
-            _items.Remove(item);
+        _items.Remove(id);
     }
 }
