@@ -22,3 +22,17 @@ Why?
 The compiler does not know that T has an Id property T can be any type  so we cannot use item.Id unless we tell the compiler that T has an Id.
 
 ------------------------------------------
+## Step 7
+
+ Store<string> must not compile because Store<T> has the constraint where T : IHasId
+
+ string  does not implement  IHasId  so it does not have the required  Id  property.
+ Therefore string cannot be used as T in Store<T>.
+
+------------------------------------------
+The common name for this kind of class is a Generic Repository.
+
+It provides common operations such as adding, getting, and removing objects without depending on a specific type.
+
+------------------------------------------
+
