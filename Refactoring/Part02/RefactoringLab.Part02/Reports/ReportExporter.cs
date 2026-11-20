@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RefactoringLab.Part02.Reports;
+public abstract class ReportExporter
+{
+    public void Export(string path)
+    {
+        var rows = Load();
+        if (!Validate(rows))
+            throw new InvalidOperationException("Invalid data");
+        var content = Format(rows);
+        Save(path, content);
+    }
+
+    private List<string[]> Load() =>
+    [
+        ["Id", "Name"],
+        ["1", "Keyboard"],
+        ["2", "Mouse"]
+    ];
+
+    private bool Validate(List<string[]> rows) =>
+           rows.Count > 1 && rows[0].Length > 0;
+
+    protected abstract string Format(List<string[]> rows);
+
+    private void Save(string path, string content) =>
+        File.WriteAllText(path, content);
+}
+
